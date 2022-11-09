@@ -14,7 +14,7 @@ int main(){
         cout << "\nPilihan Anda [1-4] : ";
         cin >> pilih;
         if(pilih == 1){
-            if(isFull()){
+            if(isFull() == true){
                 cout << "Data Penuh\n";
             } else {
                 cout << "Masukkan Nama :";

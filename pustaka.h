@@ -2,14 +2,14 @@
 
 using namespace std;
 
-struct queue{
+struct stack{
     string nama;
     int nilai;
-    queue *next;
+    stack *next;
 };
 
-queue *head=NULL;
-queue *tail=NULL;
+stack *head=NULL;
+stack *tail=NULL;
 
 int top = 1;
 int maks = 5;
@@ -30,9 +30,9 @@ bool isEmpty(){
     }
 }
 
-void inqueue(string data1, int data2){
-    queue *baru;
-    baru = new queue;
+void push(string data1, int data2){
+    stack *baru;
+    baru = new stack;
     baru->nama = data1;
     baru->nilai = data2;
     baru->next = NULL;
@@ -46,14 +46,14 @@ void inqueue(string data1, int data2){
     }
     
     top++;
-    cout << "Hasil Inqueue : " << data1 << " " << data2 << "\n";
+    cout << "Hasil PUSH : " << data1 << " " << data2 << "\n";
 }
 
-void dequeue(){
+void pop(){
     string data1;
     int data2;
-    queue *hapus;
-    queue *bantu;
+    stack *hapus;
+    stack *bantu;
     if (isEmpty() == true){
         cout << "Maaf tidak ada data !\n";
     } else {
@@ -63,16 +63,23 @@ void dequeue(){
             data2 = hapus->nilai;
             head = NULL;
             tail = NULL;
-            cout << "Hasil Dequeue : " << data1 << " " << data2 << "\n";
+            cout << "Hasil POP : " << data1 << " " << data2 << "\n";
             delete hapus;
             top--;
         } else {
             hapus = head;
-            head = hapus->next;
-            hapus->next = NULL;
-            data1 = hapus->nama;
-            data2 = hapus->nilai;
-            cout << "Hasil Dequeue : " << data1 << " " << data2 << "\n";
+            // do{
+            //     bantu = hapus;
+            //     hapus = hapus->next;
+            // } while (hapus->next != NULL);
+            while (hapus->next != NULL){
+                bantu = hapus;
+                hapus = hapus->next;
+            }
+            
+            bantu->next = NULL;
+            tail = bantu;
+            cout << "Hasil POP : " << hapus->nama << " " << hapus->nilai << "\n";
             delete hapus;
             top--;
         }
@@ -83,10 +90,10 @@ void show(){
     if (isEmpty() == true){
         cout << "Maaf data kosong !\n";
     } else {
-        queue *list;
+        stack *list;
         list = head;
         int i = 0;
-        cout << "Data queue :\n";
+        cout << "Data Stack :\n";
         while (list != NULL){
             cout << list->nama << " " << list->nilai << "\n";
             list = list->next;
